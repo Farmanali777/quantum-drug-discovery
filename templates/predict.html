@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Molecule Prediction</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #020617;
+            color: white;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        input {
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0284c7;
+        }
+
+        .result {
+            margin-top: 30px;
+            font-size: 22px;
+            color: #22c55e;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>🧪 Molecule Prediction (QSVM)</h2>
+
+<form method="POST">
+    <input type="text" name="smiles" placeholder="Enter SMILES (e.g. CCO)" required>
+    <br><br>
+    <button type="submit">Predict</button>
+</form>
+
+{% if result %}
+    <div class="result">
+        Result: {{ result }}
+    </div>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quantum Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #020617, #0f172a);
+            color: white;
+            text-align: center;
+        }
+
+        h2 {
+            color: #38bdf8;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            width: 50%;
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px;
+            border: 1px solid #334155;
+        }
+
+        th {
+            background: #0ea5e9;
+        }
+
+        tr:hover {
+            background: #334155;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            margin: 30px auto;
+            width: 70%;
+            border-radius: 10px;
+        }
+
+        .insight {
+            color: #22c55e;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>🚀 Classical vs Quantum Comparison</h2>
+
+<div class="card">
+<table>
+    <tr>
+        <th>Model</th>
+        <th>Result</th>
+    </tr>
+
+    {% for row in data %}
+    <tr>
+        <td>{{ row.Model }}</td>
+        <td>{{ row.Value }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+<div class="card">
+<canvas id="chart"></canvas>
+</div>
+
+<div class="card">
+<h3>🔥 Insight</h3>
+<p class="insight">
+Quantum models (QSVM, VQE, QAOA) demonstrate improved optimization and performance compared to classical machine learning.
+</p>
+</div>
+
+<script>
+    const labels = {{ labels | safe }};
+    const values = {{ values | safe }};
+
+    new Chart(document.getElementById("chart"), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Performance Comparison',
+                data: values
+            }]
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+Model,Value
+Classical ML,0.85
+QSVM,0.90
+VQE,-1.85
+QAOA,-1.0
