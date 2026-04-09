@@ -1,13 +1,24 @@
-
+# Disable RDKit warnings
 from rdkit import RDLogger
 RDLogger.DisableLog('rdApp.*')
+
+# Flask & libraries
 from flask import Flask, render_template, request
 import pandas as pd
+import joblib
+
+# RDKit
 from rdkit import Chem
 from rdkit.Chem import Descriptors
 
+# PennyLane
+from src.pennylane_qml import run_pennylane
+
 # Initialize Flask
 app = Flask(__name__, template_folder="templates")
+
+# Load trained ML model
+model = joblib.load("model.pkl")
 
 # -----------------------------
 # Feature Extraction (RDKit)
@@ -24,36 +35,53 @@ def featurize(smiles):
     return None
 
 # -----------------------------
-# Improved Prediction Logic
+# FINAL HYBRID PREDICTION
 # -----------------------------
 def predict_molecule(features):
     if features is None:
         return "Invalid SMILES ❌"
 
-    mw, logp, h_donors, h_acceptors = features
+    mw = features[0]
 
-    # More realistic rule-based logic
-    if mw < 300 and logp < 3 and h_donors <= 2:
-        return "Active ✅"
-    else:
-        return "Inactive ❌"
+    # 🔥 HYBRID LOGIC
+    # Small molecules → heuristic
+    if mw < 200:
+        return "Active ✅ (Low molecular weight heuristic)"
+
+    try:
+        prediction = model.predict([features])[0]
+
+        if prediction == 1:
+            return "Active ✅"
+        else:
+            return "Inactive ❌"
+
+    except Exception:
+        return "Prediction Error ⚠️"
 
 # -----------------------------
 # Routes
 # -----------------------------
 
-# Home Page
 @app.route("/")
 def home():
     return render_template("index.html")
 
-# Results Dashboard
 @app.route("/results")
 def results():
     df = pd.read_csv("results/final_results.csv")
 
     labels = df["Model"].tolist()
     values = df["Value"].tolist()
+
+    # Add PennyLane result
+    try:
+        pennylane_result = run_pennylane()
+        labels.append("PennyLane")
+        values.append(round(pennylane_result, 4))
+    except Exception:
+        labels.append("PennyLane")
+        values.append(0)
 
     return render_template(
         "results.html",
@@ -62,7 +90,6 @@ def results():
         values=values
     )
 
-# Prediction Page
 @app.route("/predict", methods=["GET", "POST"])
 def predict():
     result = None

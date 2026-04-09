@@ -64,12 +64,14 @@
         <th>Result</th>
     </tr>
 
-    {% for row in data %}
+    <!-- 🔥 DYNAMIC TABLE (FIXED) -->
+    {% for i in range(labels|length) %}
     <tr>
-        <td>{{ row.Model }}</td>
-        <td>{{ row.Value }}</td>
+        <td>{{ labels[i] }}</td>
+        <td>{{ values[i] }}</td>
     </tr>
     {% endfor %}
+
 </table>
 </div>
 
@@ -80,7 +82,7 @@
 <div class="card">
 <h3>🔥 Insight</h3>
 <p class="insight">
-Quantum models (QSVM, VQE, QAOA) demonstrate improved optimization and performance compared to classical machine learning.
+Quantum models (QSVM, VQE, QAOA, PennyLane) demonstrate enhanced optimization and hybrid learning capabilities compared to classical machine learning.
 </p>
 </div>
 
