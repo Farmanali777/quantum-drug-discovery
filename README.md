@@ -75,28 +75,44 @@ touch src/01_dataset_import.py \
       src/07_hybrid_loop.py \
       src/08_mlflow_tracking.py
 
+
 nano src/01_dataset_import.py
+
 python src/01_dataset_import.py
 
+
 nano src/02_preprocessing.py
+
 python src/02_preprocessing.py
 
+
 nano src/03_classical_ml.py
+
 python src/03_classical_ml.py
 
+
 nano src/04_qsvm.py
+
 python src/04_qsvm.py
 
+
 nano src/05_vqe.py
+
 python src/05_vqe.py
 
+
 nano src/06_qaoa.py
+
 python src/06_qaoa.py
 
+
 nano src/07_hybrid_loop.py
+
 python src/07_hybrid_loop.py
 
+
 nano src/08_mlflow_tracking.py
+
 python src/08_mlflow_tracking.py
 
 
