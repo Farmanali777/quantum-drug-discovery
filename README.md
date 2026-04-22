@@ -125,7 +125,7 @@ mlflow ui \
 
 sudo ufw allow 5000
 
-fuser -k 8000/tcp
+fuser -k 5000/tcp
 
 🌐 ACCESS IN BROWSER
 http://YOUR_PUBLIC_IP:5000
